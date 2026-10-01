@@ -1,12 +1,6 @@
 # HR Analytics Dashboard — Employee Attrition (Power BI)
 
 An interactive, single-page Power BI dashboard that analyses **employee attrition** across 1,470 employees. It answers a core HR question: **who is leaving, and what do they have in common?**
-
-![Dashboard preview](images/dashboard.png)
-<!-- Add a screenshot: Power BI Desktop > File > Export > or Win+Shift+S, save as images/dashboard.png -->
-
----
-
 ## Key Results
 
 | KPI | Value |
@@ -71,11 +65,3 @@ HR-Analytics-Dashboard/
 
 Data cleaning and transformation (Power Query) · Calculated columns and DAX measures · Dashboard layout and storytelling · KPI design · Attrition / HR analytics · Documentation
 
-## Known Limitations
-
-This is a single-table model and attrition findings are **correlations, not proof of cause**. A few visuals and a sort helper column have known issues, listed with fixes in [Known Issues & Roadmap](DOCUMENTATION.md#6-known-issues--roadmap).
-
-## Author
-
-**<Your Name>** — Data Analyst (transitioning from Software Test Engineering)
-[LinkedIn](https://linkedin.com/in/your-profile) · [GitHub](https://github.com/your-username)
