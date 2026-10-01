@@ -80,11 +80,3 @@ HR-Analytics-Dashboard/
 
 Data cleaning and transformation (Power Query) · Calculated columns and DAX measures · Dashboard layout and storytelling · KPI design · Attrition / HR analytics · Documentation
 
-## Known Limitations
-
-This is a single-table model and attrition findings are **correlations, not proof of cause**. A few visuals and a sort helper column have known issues, listed with fixes in [docs/KNOWN_ISSUES_AND_ROADMAP.md](docs/KNOWN_ISSUES_AND_ROADMAP.md).
-
-## Author
-
-**<Your Name>** — Data Analyst (transitioning from Software Test Engineering)
-[LinkedIn](https://linkedin.com/in/your-profile) · [GitHub](https://github.com/your-username)
