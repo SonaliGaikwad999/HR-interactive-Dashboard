@@ -7,7 +7,7 @@
 3. [Data Model & DAX](#3-data-model--dax)
 4. [Dashboard Guide](#4-dashboard-guide)
 5. [Insights & Recommendations](#5-insights--recommendations)
-6. [Known Issues & Roadmap](#6-known-issues--roadmap)
+
 
 ---
 
@@ -370,72 +370,3 @@ Education level shows only a weak pattern (High School 18.2% down to Doctoral 10
 
 - Add statistical testing or a simple logistic regression to see which factors hold up after controlling for each other (overtime, level and income are likely correlated).
 - Add trend data (attrition by period) if dates become available.
-
----
-
-## 6. Known Issues & Roadmap
-
-Documenting limitations openly: these were found while reviewing the file, with the fix for each.
-
-### Known Issues
-
-#### 1. Sorted Age column maps three age groups to the wrong value
-
-**What happens:** The Power Query conditional column checks for `"25-34"`, `"35-44"`, `"45-54"`, but the data contains `"25 - 34"`, `"35 - 44"`, `"45 - 54"` (spaces around the hyphen). Those three groups fall to the `else 5` branch.
-
-| Age Group | Intended | Actual |
-|---|---|---|
-| Under 25 | 1 | 1 |
-| 25 - 34 | 2 | **5** |
-| 35 - 44 | 3 | **5** |
-| 45 - 54 | 4 | **5** |
-| Over 55 | 5 | 5 |
-
-**Fix:** match the exact labels in the *Added Conditional Column1* step:
-
-```m
-Table.AddColumn(#"Changed Type1", "Sorted Age", each
-    if [Age Group] = "Under 25" then 1
-    else if [Age Group] = "25 - 34" then 2
-    else if [Age Group] = "35 - 44" then 3
-    else if [Age Group] = "45 - 54" then 4
-    else 5)
-```
-
-Then use **Column tools > Sort by column > Sorted Age** on Age Group.
-
-#### 2. "Count of Attrition" visuals count all employees
-
-**What happens:** The area chart (by Age) and the donut (by Department) use `Count of Attrition`, which counts every non-blank value in the Attrition column. Because the column holds "Yes" and "No", this is **headcount**, not attrition.
-
-**Fix:** replace the value field with the `[Total_Attrition]` measure (leavers) or `[Attrition_Rate]` (rate), and retitle accordingly. If headcount is the intended message, rename the visual to "Employees by Age/Department".
-
-#### 3. Hard-coded local file path
-
-The data source points to a local Downloads folder, so refresh fails on other machines. **Fix:** use a Power Query parameter or relative source (see [Data Preparation](#re-pointing-the-data-source)).
-
-#### 4. Two measures are defined but not used
-
-`Avg_Age` and `Average_Salary` exist, but the cards use implicit column averages. Cosmetic; switch the cards to the measures for consistency.
-
-#### 5. Single page, no visual titles on some charts
-
-Adding clear titles and axis labels would make the visuals self-explanatory for new viewers.
-
-### Limitations
-
-- Snapshot data with **no date field**, so no attrition trend over time.
-- Attrition is binary with no leaving date or reason.
-- Correlation only; factors such as overtime, level and income overlap.
-- Currency and distance units are not specified in the source.
-
-### Roadmap
-
-- [ ] Fix issues 1 and 2 above
-- [ ] Add a **Key Insights** text panel or second page with the findings in `INSIGHTS.md`
-- [ ] Add a decomposition tree for attrition drivers
-- [ ] Add income bands and tenure bands as extra dimensions
-- [ ] Add tooltips showing rate and headcount together
-- [ ] Add a Power Query parameter for the file path
-- [ ] Publish to Power BI Service and link the live report in the README
-- [ ] Optional: logistic regression in Python to rank attrition drivers
